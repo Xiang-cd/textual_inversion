@@ -35,8 +35,6 @@ def load_model_from_config(config, ckpt, verbose=False):
         print("unexpected keys:")
         print(u)
 
-    model.cuda()
-    # model.to(torch.device('cuda:2'))
     return model
 
 def get_parser(**parser_kwargs):
@@ -162,11 +160,9 @@ def get_parser(**parser_kwargs):
         default="", 
         help="Initialize embedding manager from a checkpoint")
 
-    parser.add_argument("--placeholder_tokens", 
+    parser.add_argument("--placeholder_string", 
         type=str, 
-        nargs="+", 
-        default=["*"],
-        help="Placeholder token which will be used to denote the concept in future prompts")
+        help="Placeholder string which will be used to denote the concept in future prompts. Overwrites the config options.")
 
     parser.add_argument("--init_word", 
         type=str, 
@@ -606,7 +602,8 @@ if __name__ == "__main__":
 
         # config.model.params.personalization_config.params.init_word = opt.init_word
         config.model.params.personalization_config.params.embedding_manager_ckpt = opt.embedding_manager_ckpt
-        config.model.params.personalization_config.params.placeholder_tokens = opt.placeholder_tokens
+        if opt.placeholder_string:
+            config.model.params.personalization_config.params.placeholder_strings = [opt.placeholder_string]
 
         if opt.init_word:
             config.model.params.personalization_config.params.initializer_words[0] = opt.init_word
