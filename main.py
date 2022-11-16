@@ -36,6 +36,7 @@ def load_model_from_config(config, ckpt, verbose=False):
         print(u)
 
     model.cuda()
+    # model.to(torch.device('cuda:2'))
     return model
 
 def get_parser(**parser_kwargs):

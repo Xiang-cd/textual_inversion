@@ -1,0 +1,8 @@
+**/*.pyc
+latent_diffusion.egg-info/
+logs/
+models/ldm/text2img-large/
+outputs/
+self-data/
+src/
+
